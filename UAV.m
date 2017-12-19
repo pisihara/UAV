@@ -3,7 +3,7 @@
 clear all; close all; format long;
 simdata='UAV7a.xlsx'; %% where output data is recorded
 %% SIMULATION PARAMETERS
-numsim=2;  %% number of simulations
+numsim=10;  %% number of simulations
 steps=80;  %% total number of time steps in simulation 
 deltat=15; %% time increment reprsented by 1 step (in minutes)
 k=1/3;  %% mean steps between requests is 1/k 
@@ -107,23 +107,21 @@ end
      hold on;
     end 
  end
-
 %% Compute simulation statistics for run #n
- summarydata(n,1)=PRFleet.numUAVS; %% #UAVs
- summarydata(n,2)=PRFleet.hiSpeedUAVS; %% # hi-speed UAVs
- summarydata(n,3)=requestID;  %% total requests
- summarydata(n,4)=0; %% number hi priority requests
- summarydata(n,5)=0; %% number lo priority requests
- summarydata(n,6)=0;  %% number responses completed
- summarydata(n,7)=0;  %% number HP response completed
- summarydata(n,8)=0; %% number LP responses completed
- summarydata(n,9)=0;  %% total time for completed responses
- summarydata(n,10)=0;  %%hi priority response time
- summarydata(n,11)=0; %% lo priority response time
- summarydata(n,12)=0;  %% total mean response time
- summarydata(n,13)=0;  %% mean hi priority response time
- summarydata(n,14)=0; %% mean lo priority response time
-
+  summarydata(n,1)=PRFleet.numUAVS; %% #UAVs
+  summarydata(n,2)=PRFleet.hiSpeedUAVS; %% # hi-speed UAVs
+  summarydata(n,3)=requestID;  %% total requests
+  summarydata(n,4)=0; %% number hi priority requests
+  summarydata(n,5)=0; %% number lo priority requests
+  summarydata(n,6)=0;  %% number responses completed
+  summarydata(n,7)=0;  %% number HP response completed
+  summarydata(n,8)=0; %% number LP responses completed
+  summarydata(n,9)=0;  %% total time for completed responses
+  summarydata(n,10)=0;  %%hi priority response time
+  summarydata(n,11)=0; %% lo priority response time
+  summarydata(n,12)=0;  %% total mean response time
+  summarydata(n,13)=0;  %% mean hi priority response time
+  summarydata(n,14)=0; %% mean lo priority response time
  for i=1:length(requestData(:,1))  %% Priority of requests
     if requestData(i,3)==1
     summarydata(n,4)= summarydata(n,4)+1;
@@ -203,36 +201,27 @@ cumulative(14,n)=mlpr; %% mean number lp requests
 cumulative(15,n)=mlprc;  %%mean lp requests completed 
 cumulative(16,n)=mlprct; %% mean lo priority completion time
 
+%% Summary Plot of All Simulations  
+for i=1:n
+ sim(i,1)=i;
+ hi(i,1)=summarydata(i,13);
+ lo(i,1)=summarydata(i,14);
+end
+ him=mean(hi(:,1));
+ lom=mean(lo(:,1));
+for i=1:n
+ himean(i,1)=him;
+ lomean(i,1)=lom;
+end
 figure
-plot(day(1,:),15*summarydata(:,13),'r');
+plot(sim,hi,'r');
 hold on;
-plot(day(1,:),HPmean(1,:),'--r');
+plot(sim,himean,'--r');
 hold on;
-plot(day(1,:),15*summarydata(:,14),'b');
+plot(sim,lo,'b');
+hold on;
+plot(sim,lomean,'--b');
 hold on
-plot(day(1,:),LPmean(1,:),'--b');
-hold on;
-legend('Average HP Response Time','HP Mean','Average LP Response Time','LP Mean','location','southwest');
+legend('Hi Priority Response Time','Mean Hi Priority',  'Lo Priority Response Time','Mean Lo Priority','location','southwest');
 xlabel('Simulation Number');
-ylabel('Minutes');
-
-figure
-plot(day(1,:),summarydata(:,4),'r');
-hold on;
-plot(day(1,:),HPMean1(1,:),'r');
-hold on;
-plot(day(1,:),summarydata(:,7),'--r');
-hold on
-plot(day(1,:),HPMean2(1,:),'--r');
-hold on;
-plot(day(1,:),summarydata(:,5),'b');
-hold on;
-plot(day(1,:),LPMean1(1,:),'b');
-hold on;
-plot(day(1,:),summarydata(:,8),'--b');
-hold on
-plot(day(1,:),LPMean2(1,:),'--b');
-hold on;
-legend('#HP Requests','Mean #HP Requests','#HP Requests Completed','Mean #HP Requests Completed','LP Requests','#LP Requests Completed','location','southwest');
-xlabel('Simulation Number');
-ylabel('Number Requests');
+ylabel('# Steps (1 step=15 min.) ');
