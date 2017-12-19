@@ -3,7 +3,7 @@
 clear all; close all; format long;
 simdata='UAV7a.xlsx'; %% where output data is recorded
 %% SIMULATION PARAMETERS
-numsim=50;  %% number of simulations
+numsim=2;  %% number of simulations
 steps=80;  %% total number of time steps in simulation 
 deltat=15; %% time increment reprsented by 1 step (in minutes)
 k=1/3;  %% mean steps between requests is 1/k 
@@ -15,7 +15,7 @@ for n=1:numsim  %% Main loop to execute simulation run #n
 clear requestTime
 %% Create Map
 figure
-%MAP=imread('PuertoRico.png'); image(MAP); axis=[0 900 100 450]; hold on;  
+MAP=imread('PuertoRico.png'); image(MAP); axis=[0 900 100 450]; hold on;  
 rect=[150 200 400 150];
 %% Create new UAV fleet 
 clear PRfleet;
