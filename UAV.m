@@ -1,7 +1,7 @@
 %% Main Script for Puerto Rico UAV Disaster Response Fleet 
 
 clear all; close all; format long;
-simdata='UAV7a.xlsx'; %% where output data is recorded
+simdata='UAV.xlsx'; %% where output data is recorded
 %% SIMULATION PARAMETERS
 numsim=10;  %% number of simulations
 steps=80;  %% total number of time steps in simulation 
