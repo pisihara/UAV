@@ -1,4 +1,4 @@
-%% Main Script for Puerto Rico UAV Disaster Response Fleet NEW VERSION
+%% Main Script for Puerto Rico UAV Disaster Response Fleet NEWER VERSION
 
 clear all; close all; format long;
 simdata='UAV.xlsx'; %% where output data is recorded
